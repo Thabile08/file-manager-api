@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-api
+  template:
+    metadata:
+      labels:
+        app: file-api
+    spec:
+      containers:
+      - name: file-api
+        image: file-management-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: "test"
+        - name: AWS_SECRET_ACCESS_KEY
+          value: "test"
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: S3_BUCKET_NAME
+          value: "my-bucket"
+        - name: S3_ENDPOINT_URL
+          value: "http://host.minikube.internal:4566"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
