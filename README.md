@@ -39,7 +39,7 @@ on Kubernetes (Minikube).
     kubectl apply -f service.yaml
     minikube service file-api-service --url
 
-WTC Code: WTC-S5LQ9TKR
+Code: WTC-S5LQ9TKR
 
 ## Author
 
