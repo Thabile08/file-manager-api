@@ -24,19 +24,13 @@ on Kubernetes (Minikube).
 
 ## Run Locally
 
-    # Start MiniStack
     docker run -d -p 4566:4566 --name ministack ministackorg/ministack
-
-    # Create a bucket
-    python3 -c "import boto3; s3=boto3.client('s3', endpoint_url='http://localhost:4566', aws_access_key_id='test', aws_secret_access_key='test', region_name='us-east-1'); s3.create_bucket(Bucket='my-bucket')"
-
-    # Install and run
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
     python3 app.py
 
-## Build and Deploy on Minikube
+## Deploy on Minikube
 
     docker build -t file-management-api:latest .
     minikube start
@@ -44,13 +38,6 @@ on Kubernetes (Minikube).
     kubectl apply -f deployment.yaml
     kubectl apply -f service.yaml
     minikube service file-api-service --url
-
-## Test the API
-
-    curl <URL>/health
-    curl <URL>/files
-    curl -X POST -F "file=@requirements.txt" <URL>/upload
-    curl -O <URL>/download/requirements.txt
 
 ## Author
 
